@@ -1,0 +1,17 @@
+{
+  "name": "tuyenduongnhagiaotieubieu2026",
+  "version": "1.0.0",
+  "description": "Hệ thống tra cứu và lọc ảnh sự kiện Tuyên dương Nhà giáo Tiêu biểu 2026 qua nhận diện khuôn mặt AI",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve ."
+  },
+  "keywords": [
+    "face-recognition",
+    "google-drive",
+    "vercel",
+    "ai-face-search"
+  ],
+  "author": "amerald90-cyber",
+  "license": "MIT"
+}

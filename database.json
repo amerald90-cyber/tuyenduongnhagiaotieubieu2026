@@ -1,0 +1,51 @@
+{
+  "event_info": {
+    "title": "LỄ TUYÊN DƯƠNG NHÀ GIÁO TIÊU BIỂU 2026",
+    "organization": "Trường Đại học Kinh Tế",
+    "total_albums": 5,
+    "last_updated": "2026-11-20"
+  },
+  "albums": [
+    {
+      "id": "vinh_danh",
+      "name": "Ảnh Vinh Danh",
+      "drive_id": "1k561p2E4havGIaTQL-e66oFAeuEz4Ywy",
+      "drive_link": "https://drive.google.com/drive/folders/1k561p2E4havGIaTQL-e66oFAeuEz4Ywy",
+      "description": "Ảnh trao bằng khen, kỷ niệm chương và vinh danh các thầy cô tiêu biểu.",
+      "icon": "award"
+    },
+    {
+      "id": "may_1",
+      "name": "Góc Máy 1 (Sân khấu & Toàn cảnh)",
+      "drive_id": "1-oib_yYHmkONErL_HLcpd7Y8kgAAAFor",
+      "drive_link": "https://drive.google.com/drive/folders/1-oib_yYHmkONErL_HLcpd7Y8kgAAAFor",
+      "description": "Ảnh chụp góc chính diện sân khấu, phát biểu và nghi lễ chào mừng.",
+      "icon": "camera"
+    },
+    {
+      "id": "may_2",
+      "name": "Góc Máy 2 (Hậu trường & Khán giả)",
+      "drive_id": "1pGiZJk4jB5VRaYs66S3_OTU-_oHq2mFE",
+      "drive_link": "https://drive.google.com/drive/folders/1pGiZJk4jB5VRaYs66S3_OTU-_oHq2mFE",
+      "description": "Ảnh chụp khán đài, các khoảnh khắc giao lưu, chúc mừng của thầy cô và sinh viên.",
+      "icon": "users"
+    },
+    {
+      "id": "truong_kinh_te",
+      "name": "Trường Kinh Tế (Tập thể & Check-in)",
+      "drive_id": "1UYMSRcwWGh2TEwItW0-idFTSGZvQ2vqx",
+      "drive_link": "https://drive.google.com/drive/folders/1UYMSRcwWGh2TEwItW0-idFTSGZvQ2vqx",
+      "description": "Ảnh kỷ niệm các khoa, phòng ban và góc check-in sự kiện.",
+      "icon": "image"
+    },
+    {
+      "id": "le_2011_rar",
+      "name": "Kho Gốc Lễ 20/11 (File nén chất lượng cao)",
+      "drive_id": "11rymbDb2rXEvv8viFivthLW49Ct3ICwj",
+      "drive_link": "https://drive.google.com/file/d/11rymbDb2rXEvv8viFivthLW49Ct3ICwj/view?usp=sharing",
+      "description": "Tập tin nén chứa toàn bộ ảnh gốc dung lượng cao của ngày lễ.",
+      "icon": "archive"
+    }
+  ],
+  "photos": []
+}
