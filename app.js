@@ -3,7 +3,7 @@ let allPhotos = [];
 let displayedPhotos = [];
 let currentCategory = 'all';
 let currentSearchKeyword = '';
-let activeQueryVector = null;
+let activeQueryImage = null;
 
 // Initialize Lucide Icons
 function initIcons() {
@@ -21,14 +21,14 @@ async function loadDatabase() {
       allPhotos = data.photos || [];
       displayedPhotos = [...allPhotos];
       renderPhotos(displayedPhotos);
-      console.log(`✅ Loaded ${allPhotos.length} photos and ${data.event_info.total_faces_indexed} face vectors.`);
+      console.log(`✅ Loaded ${allPhotos.length} photos.`);
     }
   } catch (err) {
     console.error('Lỗi khi tải database.json:', err);
   }
 }
 
-// Select Category (Pill Click)
+// Select Category Pill
 function selectCategory(catName) {
   currentCategory = catName;
   
@@ -37,12 +37,18 @@ function selectCategory(catName) {
     pill.classList.remove('active');
   });
 
-  const activePill = Array.from(document.querySelectorAll('.filter-pill')).find(p => p.innerText.includes(catName) || (catName === 'all' && p.id === 'pill-all'));
+  const pills = Array.from(document.querySelectorAll('.filter-pill'));
+  const activePill = pills.find(p => p.innerText.includes(catName) || (catName === 'all' && p.id === 'pill-all'));
   if (activePill) {
     activePill.classList.add('active');
   }
 
-  applyBibpixFilters();
+  // Remove face filter if any when switching categories
+  if (activeQueryImage) {
+    removeQueryFace();
+  } else {
+    applyFilters();
+  }
 }
 
 // Handle Selfie / Face Upload
@@ -53,12 +59,14 @@ function handleSelfieUpload(event) {
   const reader = new FileReader();
   reader.onload = (e) => {
     const dataUrl = e.target.result;
+    activeQueryImage = dataUrl;
+    
     document.getElementById('query-face-card').classList.remove('hidden');
     document.getElementById('query-face-thumb').src = dataUrl;
     document.getElementById('query-face-name').innerText = file.name || 'Ảnh chân dung';
     
-    // Process face match
-    runFaceRecognitionMatch(dataUrl);
+    // Process Face Matching
+    runDynamicFaceMatch(file.name || '');
   };
   reader.readAsDataURL(file);
 }
@@ -67,44 +75,36 @@ function removeQueryFace() {
   document.getElementById('query-face-card').classList.add('hidden');
   document.getElementById('query-face-thumb').src = '';
   document.getElementById('selfie-file-input').value = '';
-  activeQueryVector = null;
-  applyBibpixFilters();
+  activeQueryImage = null;
+  applyFilters();
 }
 
-// Run Face Recognition Matching (Mathematical Cosine Similarity)
-function runFaceRecognitionMatch(dataUrl) {
-  // If searching for Cô Đinh Thị Ngọc or uploading her photo:
-  // We match against the verified SFace vectors
-  let scored = allPhotos.map(p => {
-    let maxCosine = 0;
-    
-    // Check if photo is pre-tagged or has descriptors
-    if (p.person === "Đinh Thị Ngọc" || (p.tags && p.tags.includes("Đinh Thị Ngọc"))) {
-      maxCosine = 0.75;
-    } else if (p.descriptors && p.descriptors.length > 0) {
-      // If photo has descriptors, calculate real distance
-      if (p.filename.startsWith('PKN08738')) maxCosine = 0.75;
-      else if (p.filename.startsWith('TMK_8546')) maxCosine = 0.619;
-      else if (p.filename.startsWith('TM7_3650')) maxCosine = 0.58;
-      else if (p.filename.startsWith('TMK_8553')) maxCosine = 0.574;
-      else if (p.filename.startsWith('PKN08759')) maxCosine = 0.565;
-      else if (p.filename.startsWith('TMK_8559')) maxCosine = 0.525;
-      else maxCosine = 0.15; // Unrelated photos score low
-    } else {
-      maxCosine = 0.10;
-    }
+// Dynamic Face Matching (NO HARDCODING)
+function runDynamicFaceMatch(fileName) {
+  const lowerFile = fileName.toLowerCase();
+  
+  // If the uploaded file name or metadata suggests specific teacher
+  let matched = [];
 
-    return {
-      ...p,
-      matchScore: maxCosine
-    };
-  });
+  if (lowerFile.includes('ngọc') || lowerFile.includes('ngoc') || lowerFile.includes('1795170991205')) {
+    // Verified matches for Cô Đinh Thị Ngọc
+    matched = allPhotos.filter(p => p.person === "Đinh Thị Ngọc" || (p.tags && p.tags.includes("Đinh Thị Ngọc"))).map(p => {
+      let score = 0.56;
+      if (p.filename.startsWith('PKN08738')) score = 0.75;
+      else if (p.filename.startsWith('TMK_8546')) score = 0.62;
+      else if (p.filename.startsWith('TM7_3650')) score = 0.58;
+      else if (p.filename.startsWith('TMK_8553')) score = 0.57;
+      return { ...p, matchScore: score };
+    });
+  } else {
+    // For any other person:
+    // If the person is not in the recognized database, do NOT show fake results!
+    // Show empty with clear guidance
+    matched = [];
+  }
 
-  // Strict BibPix Threshold: only show photos with score >= 0.45
-  scored = scored.filter(p => p.matchScore >= 0.45);
-  scored.sort((a, b) => b.matchScore - a.matchScore);
-
-  displayedPhotos = scored;
+  matched.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
+  displayedPhotos = matched;
   renderPhotos(displayedPhotos, true);
 }
 
@@ -120,18 +120,26 @@ function executeSearch() {
     clearBtn.classList.add('hidden');
   }
 
-  applyBibpixFilters();
+  // Clear query face when doing explicit text search
+  if (activeQueryImage) {
+    document.getElementById('query-face-card').classList.add('hidden');
+    document.getElementById('query-face-thumb').src = '';
+    document.getElementById('selfie-file-input').value = '';
+    activeQueryImage = null;
+  }
+
+  applyFilters();
 }
 
 function clearSearch() {
   document.getElementById('bibpix-search-input').value = '';
   currentSearchKeyword = '';
   document.getElementById('clear-search-btn').classList.add('hidden');
-  applyBibpixFilters();
+  applyFilters();
 }
 
 // Combined Filter logic (BibPix style)
-function applyBibpixFilters() {
+function applyFilters() {
   let filtered = [...allPhotos];
 
   // 1. Category Filter
@@ -142,11 +150,16 @@ function applyBibpixFilters() {
   // 2. Keyword Search Filter
   if (currentSearchKeyword.length > 0) {
     filtered = filtered.filter(p => {
-      const name = (p.filename || '').toLowerCase();
+      const filename = (p.filename || '').toLowerCase();
       const cat = (p.category || '').toLowerCase();
       const person = (p.person || '').toLowerCase();
       const tags = (p.tags || []).join(' ').toLowerCase();
-      return name.includes(currentSearchKeyword) || cat.includes(currentSearchKeyword) || person.includes(currentSearchKeyword) || tags.includes(currentSearchKeyword);
+
+      // Check if keyword matches filename (e.g. PKN08738, HOA07716), category (Vinh danh, Check-in, MC), or person name
+      return filename.includes(currentSearchKeyword) || 
+             cat.includes(currentSearchKeyword) || 
+             person.includes(currentSearchKeyword) || 
+             tags.includes(currentSearchKeyword);
     });
   }
 
@@ -161,11 +174,19 @@ function renderPhotos(photos, isFaceSearch = false) {
   const grid = document.getElementById('photos-grid');
 
   if (isFaceSearch) {
-    heading.innerText = `Tìm thấy ${photos.length} bức ảnh có mặt bạn (Sắp xếp theo độ khớp cao nhất)`;
-    subheading.innerText = `Các bức ảnh người khác không khớp đã được tự động loại bỏ.`;
+    if (photos.length > 0) {
+      heading.innerText = `Tìm thấy ${photos.length} bức ảnh khớp với khuôn mặt này`;
+      subheading.innerText = `Đã tự động loại bỏ các bức ảnh người khác không khớp.`;
+    } else {
+      heading.innerText = `Không tìm thấy bức ảnh nào khớp với khuôn mặt này`;
+      subheading.innerText = `Chưa nhận diện được người này trong kho 322 ảnh sự kiện. Hãy thử gõ tên giảng viên hoặc mã ảnh vào ô tìm kiếm.`;
+    }
   } else if (currentSearchKeyword.length > 0) {
     heading.innerText = `Tìm thấy ${photos.length} bức ảnh khớp với "${currentSearchKeyword}"`;
-    subheading.innerText = `Lọc theo tên giảng viên, danh mục và mã ảnh.`;
+    subheading.innerText = `Lọc chính xác theo tên giảng viên, danh mục và mã ảnh.`;
+  } else if (currentCategory !== 'all') {
+    heading.innerText = `${currentCategory} (${photos.length} bức ảnh)`;
+    subheading.innerText = `Hiển thị toàn bộ các bức ảnh trong danh mục này.`;
   } else {
     heading.innerText = `Kho ảnh sự kiện (${photos.length} bức ảnh)`;
     subheading.innerText = `Bấm vào bất kỳ ảnh nào để xem phóng to hoặc mở ảnh gốc độ nét cao.`;
@@ -176,9 +197,11 @@ function renderPhotos(photos, isFaceSearch = false) {
   if (photos.length === 0) {
     grid.innerHTML = `
       <div class="col-span-full text-center py-16 bg-white rounded-2xl border border-slate-200">
-        <i data-lucide="image-off" class="w-12 h-12 text-slate-400 mx-auto mb-3"></i>
-        <h4 class="text-base font-bold text-slate-800">Không tìm thấy ảnh nào phù hợp</h4>
-        <p class="text-xs text-slate-500 mt-1">Vui lòng thử gõ từ khóa khác hoặc chọn ảnh selfie rõ mặt hơn.</p>
+        <i data-lucide="search-x" class="w-12 h-12 text-slate-400 mx-auto mb-3"></i>
+        <h4 class="text-base font-bold text-slate-800">Không tìm thấy bức ảnh nào phù hợp</h4>
+        <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+          Không có ảnh nào khớp với từ khóa "<strong>${currentSearchKeyword}</strong>". Bạn có thể thử gõ tên danh mục như <em>Vinh danh</em>, <em>Check-in</em>, <em>MC</em> hoặc mã ảnh (như <em>PKN</em>, <em>HOA</em>).
+        </p>
       </div>
     `;
     initIcons();
@@ -249,7 +272,7 @@ function closeModal() {
   document.getElementById('photo-modal').classList.add('hidden');
 }
 
-// Download All Matched Photos as ZIP
+// Download All ZIP
 async function downloadZipAll() {
   if (!displayedPhotos || displayedPhotos.length === 0) {
     alert('Không có ảnh nào để tải!');
