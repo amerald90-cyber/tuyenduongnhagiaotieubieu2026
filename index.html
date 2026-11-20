@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tra Cứu Ảnh Khuôn Mặt - Lễ Tuyên Dương Nhà Giáo Tiêu Biểu 2026</title>
+  <title>Tra Cứu Ảnh - Lễ Tuyên Dương Nhà Giáo Tiêu Biểu 2026</title>
   
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
@@ -71,11 +71,11 @@
       <nav class="hidden md:flex items-center space-x-1 bg-brand-950/40 p-1 rounded-xl border border-white/10">
         <button id="nav-search-tab" onclick="switchTab('search')" class="tab-btn active px-4 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center space-x-2">
           <i data-lucide="scan-face" class="w-4 h-4"></i>
-          <span>Tìm Ảnh Bằng Mặt</span>
+          <span>Tra Cứu Ảnh (Mặt & Tên)</span>
         </button>
         <button id="nav-albums-tab" onclick="switchTab('albums')" class="tab-btn px-4 py-1.5 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-all flex items-center space-x-2">
           <i data-lucide="folder-git-2" class="w-4 h-4"></i>
-          <span>Kho Ảnh Drive (5 Nguồn)</span>
+          <span>Toàn Bộ Kho Ảnh (322 Ảnh)</span>
         </button>
         <button id="nav-guide-tab" onclick="switchTab('guide')" class="tab-btn px-4 py-1.5 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-all flex items-center space-x-2">
           <i data-lucide="help-circle" class="w-4 h-4"></i>
@@ -89,11 +89,11 @@
   <div class="md:hidden bg-brand-900 text-white flex justify-around p-2 border-b border-brand-800 text-xs">
     <button onclick="switchTab('search')" class="flex flex-col items-center py-1 px-3 rounded-lg text-gold-400 font-semibold">
       <i data-lucide="scan-face" class="w-5 h-5 mb-0.5"></i>
-      <span>Tìm Bằng Mặt</span>
+      <span>Tra Cứu Ảnh</span>
     </button>
     <button onclick="switchTab('albums')" class="flex flex-col items-center py-1 px-3 rounded-lg text-white/70">
       <i data-lucide="folder-git-2" class="w-5 h-5 mb-0.5"></i>
-      <span>Kho Drive</span>
+      <span>Kho Ảnh (322)</span>
     </button>
     <button onclick="switchTab('guide')" class="flex flex-col items-center py-1 px-3 rounded-lg text-white/70">
       <i data-lucide="help-circle" class="w-5 h-5 mb-0.5"></i>
@@ -104,76 +104,98 @@
   <!-- Main Content Container -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-    <!-- ================= TAB 1: FACE SEARCH ================= -->
+    <!-- ================= TAB 1: SEARCH ================= -->
     <div id="tab-search" class="space-y-6">
-      <!-- Hero Intro -->
-      <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 text-center max-w-3xl mx-auto">
-        <div class="inline-flex items-center space-x-2 bg-brand-50 text-brand-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
-          <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
-          <span>Công Nghệ AI Nhận Diện Khuôn Mặt</span>
-        </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">Tìm Toàn Bộ Ảnh Có Mặt Bạn</h2>
-        <p class="text-slate-600 text-sm sm:text-base">
-          Chỉ cần chụp selfie hoặc chọn 1 bức ảnh chân dung rõ mặt, hệ thống AI sẽ quét qua toàn bộ các góc máy và ảnh sự kiện để lọc ra những bức ảnh bạn xuất hiện.
-        </p>
-      </div>
-
-      <!-- Upload / Camera Control Box -->
-      <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <!-- Input Method Switcher -->
-        <div class="flex border-b border-slate-200 bg-slate-50/50">
-          <button id="btn-mode-upload" onclick="setInputMode('upload')" class="flex-1 py-3 text-sm font-semibold flex items-center justify-center space-x-2 text-brand-700 border-b-2 border-brand-700 bg-white">
-            <i data-lucide="upload" class="w-4 h-4"></i>
-            <span>Tải Ảnh Từ Máy</span>
-          </button>
-          <button id="btn-mode-camera" onclick="setInputMode('camera')" class="flex-1 py-3 text-sm font-semibold flex items-center justify-center space-x-2 text-slate-500 hover:text-slate-800">
-            <i data-lucide="camera" class="w-4 h-4"></i>
-            <span>Chụp Bằng Camera</span>
-          </button>
+      
+      <!-- Search Mode Selector Cards -->
+      <div class="max-w-4xl mx-auto bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center space-x-2 bg-brand-50 text-brand-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">
+            <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
+            <span>Kho Dữ Liệu 322 Bức Ảnh Sự Kiện Đã Được Nạp</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">Tìm Kiếm Chính Xác Từng Bức Ảnh Có Mặt Bạn</h2>
+          <p class="text-slate-600 text-sm max-w-2xl mx-auto">
+            Bạn có thể <strong>tải ảnh khuôn mặt</strong> để AI quét tự động, hoặc <strong>gõ trực tiếp tên / mã ảnh</strong> để lọc ra ngay các bức ảnh thật của bạn.
+          </p>
         </div>
 
-        <div class="p-6">
+        <!-- 1. GÕ TÊN HOẶC MÃ ẢNH (TEXT SEARCH) -->
+        <div class="mb-6">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2 flex items-center justify-between">
+            <span class="flex items-center space-x-1.5">
+              <i data-lucide="search" class="w-4 h-4 text-brand-700"></i>
+              <span>Cách 1: Gõ tên người, từ khóa hoặc mã ảnh để tìm nhanh</span>
+            </span>
+            <span class="text-[11px] text-slate-400 font-normal">Lọc tức thì 322 ảnh</span>
+          </label>
+          <div class="relative">
+            <input type="text" id="search-name-input" oninput="handleTextSearch(this.value)" placeholder="Gõ tên giảng viên, mã ảnh (VD: PKN08625, HOA07716) hoặc từ khóa: Vinh danh, Check-in, MC, Thứ trưởng..." class="w-full text-sm rounded-xl border-2 border-slate-200 focus:border-brand-600 bg-slate-50/50 focus:bg-white pl-11 pr-10 py-3 transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/10">
+            <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5"></i>
+            <button id="clear-search-btn" onclick="clearTextSearch()" class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600 p-1">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. TÌM BẰNG KHUÔN MẶT (FACE SEARCH) -->
+        <div class="pt-6 border-t border-slate-200">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-3 flex items-center space-x-1.5">
+            <i data-lucide="scan-face" class="w-4 h-4 text-brand-700"></i>
+            <span>Cách 2: Đưa ảnh khuôn mặt lên để AI nhận diện và lọc chính xác</span>
+          </label>
+
+          <!-- Input Method Switcher -->
+          <div class="flex border rounded-xl overflow-hidden mb-4 border-slate-200 bg-slate-50">
+            <button id="btn-mode-upload" onclick="setInputMode('upload')" class="flex-1 py-2.5 text-xs sm:text-sm font-semibold flex items-center justify-center space-x-2 text-brand-700 bg-white shadow-sm border-r border-slate-200">
+              <i data-lucide="upload" class="w-4 h-4"></i>
+              <span>Tải Ảnh Chân Dung</span>
+            </button>
+            <button id="btn-mode-camera" onclick="setInputMode('camera')" class="flex-1 py-2.5 text-xs sm:text-sm font-semibold flex items-center justify-center space-x-2 text-slate-500 hover:text-slate-800">
+              <i data-lucide="camera" class="w-4 h-4"></i>
+              <span>Chụp Selfie Bằng Camera</span>
+            </button>
+          </div>
+
           <!-- Mode 1: File Upload Dropzone -->
-          <div id="section-upload" class="space-y-4">
-            <div id="dropzone" onclick="document.getElementById('file-input').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-xl p-8 text-center cursor-pointer transition-all bg-slate-50/50 hover:bg-brand-50/30 flex flex-col items-center justify-center">
+          <div id="section-upload">
+            <div id="dropzone" onclick="document.getElementById('file-input').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-xl p-6 text-center cursor-pointer transition-all bg-slate-50/50 hover:bg-brand-50/30 flex flex-col items-center justify-center">
               <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
-              <div class="w-14 h-14 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center mb-3">
-                <i data-lucide="image-plus" class="w-7 h-7"></i>
+              <div class="w-12 h-12 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center mb-2">
+                <i data-lucide="image-plus" class="w-6 h-6"></i>
               </div>
-              <p class="text-sm font-bold text-slate-800 mb-1">Bấm để chọn ảnh chân dung hoặc kéo thả ảnh vào đây</p>
-              <p class="text-xs text-slate-500">Hỗ trợ JPG, PNG, WebP (Ảnh chân dung, ảnh thẻ hoặc selfie rõ mặt)</p>
+              <p class="text-sm font-bold text-slate-800 mb-0.5">Bấm để chọn ảnh khuôn mặt hoặc kéo thả ảnh vào đây</p>
+              <p class="text-xs text-slate-500">Chụp selfie, ảnh thẻ hoặc ảnh chân dung của bạn</p>
             </div>
           </div>
 
           <!-- Mode 2: Camera Stream -->
           <div id="section-camera" class="hidden space-y-4">
-            <div class="relative bg-slate-900 rounded-xl overflow-hidden aspect-video sm:aspect-[4/3] flex items-center justify-center max-w-md mx-auto">
+            <div class="relative bg-slate-900 rounded-xl overflow-hidden aspect-video max-w-sm mx-auto flex items-center justify-center">
               <video id="camera-stream" autoplay playsinline class="w-full h-full object-cover"></video>
               <canvas id="camera-canvas" class="hidden"></canvas>
-              
-              <!-- Face alignment guide overlay -->
               <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-                <div class="w-48 h-64 border-2 border-gold-400/80 rounded-[50px] shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]"></div>
+                <div class="w-40 h-52 border-2 border-gold-400 rounded-[40px] shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]"></div>
               </div>
             </div>
             <div class="text-center">
-              <button onclick="captureCamera()" class="px-6 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-semibold rounded-xl shadow-md transition-all inline-flex items-center space-x-2">
-                <i data-lucide="camera" class="w-5 h-5"></i>
+              <button onclick="captureCamera()" class="px-5 py-2 bg-brand-700 hover:bg-brand-800 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md transition-all inline-flex items-center space-x-2">
+                <i data-lucide="camera" class="w-4 h-4"></i>
                 <span>Chụp Ảnh Này</span>
               </button>
             </div>
           </div>
 
           <!-- Preview of Selected Query Face -->
-          <div id="query-preview-container" class="hidden mt-4 pt-4 border-t border-slate-200">
-            <div class="flex items-center justify-between bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <div id="query-preview-container" class="hidden mt-4">
+            <div class="flex items-center justify-between bg-brand-50/60 p-3.5 rounded-xl border border-brand-200">
               <div class="flex items-center space-x-3.5">
-                <img id="query-preview-img" src="" alt="Mặt mẫu" class="w-16 h-16 rounded-xl object-cover border-2 border-brand-600 shadow-sm">
+                <img id="query-preview-img" src="" alt="Mặt mẫu" class="w-14 h-14 rounded-xl object-cover border-2 border-brand-600 shadow-sm">
                 <div>
-                  <h4 class="text-sm font-bold text-slate-900">Khuôn mặt cần tìm</h4>
-                  <p id="query-face-status" class="text-xs text-brand-700 font-medium flex items-center space-x-1">
+                  <h4 class="text-sm font-bold text-slate-900">Khuôn mặt cần tìm kiếm</h4>
+                  <p class="text-xs text-brand-700 font-medium flex items-center space-x-1 mt-0.5">
                     <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                    <span>Đã nhận diện khuôn mặt</span>
+                    <span>Sẵn sàng quét qua 322 ảnh sự kiện</span>
                   </p>
                 </div>
               </div>
@@ -183,30 +205,33 @@
             </div>
           </div>
 
-          <!-- Search Settings & Filters -->
-          <div class="mt-6 pt-5 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Filter Category & Threshold -->
+          <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="filter-album" class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wide">
-                Lọc theo Album / Góc máy:
+                Góc máy / Danh mục sự kiện:
               </label>
-              <select id="filter-album" class="w-full text-sm rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                <option value="all">🌟 Tất cả các góc máy (Toàn bộ sự kiện)</option>
-                <option value="vinh_danh">🏆 Ảnh Vinh Danh (Thầy cô tiêu biểu)</option>
-                <option value="may_1">📸 Góc Máy 1 (Sân khấu & Toàn cảnh)</option>
-                <option value="may_2">👥 Góc Máy 2 (Hậu trường & Khán giả)</option>
-                <option value="truong_kinh_te">🏛️ Trường Kinh Tế (Tập thể & Check-in)</option>
+              <select id="filter-album" onchange="applyFilters()" class="w-full text-xs sm:text-sm rounded-xl border border-slate-300 bg-white px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <option value="all">🌟 Tất cả danh mục (322 ảnh)</option>
+                <option value="Ảnh Vinh Danh (Máy 1)">🏆 Ảnh Vinh Danh (49 ảnh)</option>
+                <option value="Ảnh Check-in (Máy 1)">📸 Ảnh Check-in Thầy Cô (50 ảnh)</option>
+                <option value="Ảnh MC (Máy 1)">🎤 Ảnh MC & Khai Mạc (50 ảnh)</option>
+                <option value="Biểu Diễn Nghệ Thuật (Máy 2)">🎭 Biểu Diễn Nghệ Thuật (48 ảnh)</option>
+                <option value="Thứ Trưởng Phát Biểu (Máy 2)">🎙️ Thứ Trưởng Phát Biểu (30 ảnh)</option>
+                <option value="Đại Biểu & Khán Giả (Máy 2)">👥 Đại Biểu & Khán Giả (46 ảnh)</option>
+                <option value="Trường Kinh Tế">🏛️ Trường Kinh Tế (49 ảnh)</option>
               </select>
             </div>
 
             <div>
               <div class="flex justify-between items-center mb-1.5">
                 <label for="slider-threshold" class="text-xs font-bold text-slate-700 uppercase tracking-wide">
-                  Độ nhạy AI (Ngưỡng so khớp):
+                  Độ nhạy AI:
                 </label>
                 <span id="threshold-val" class="text-xs font-extrabold text-brand-700 bg-brand-50 px-2 py-0.5 rounded">60%</span>
               </div>
-              <input type="range" id="slider-threshold" min="40" max="85" value="60" oninput="updateThreshold(this.value)" class="w-full accent-brand-700 cursor-pointer">
-              <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+              <input type="range" id="slider-threshold" min="30" max="85" value="60" oninput="updateThreshold(this.value)" class="w-full accent-brand-700 cursor-pointer">
+              <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
                 <span>Rộng hơn (Dễ thấy ảnh)</span>
                 <span>Chính xác cao</span>
               </div>
@@ -214,10 +239,10 @@
           </div>
 
           <!-- Action Button -->
-          <div class="mt-6">
-            <button id="btn-start-search" onclick="startSearch()" class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-brand-800 hover:from-brand-800 hover:to-brand-900 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-base">
+          <div class="mt-5">
+            <button id="btn-start-search" onclick="startFaceSearch()" class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-brand-800 hover:from-brand-800 hover:to-brand-900 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-sm sm:text-base">
               <i data-lucide="sparkles" class="w-5 h-5 text-gold-400"></i>
-              <span>BẮT ĐẦU TÌM KIẾM ẢNH</span>
+              <span>QUÉT KHUÔN MẶT ĐỂ LỌC ẢNH CHÍNH XÁC</span>
             </button>
           </div>
         </div>
@@ -229,28 +254,28 @@
           <i data-lucide="loader-2" class="w-10 h-10"></i>
         </div>
         <h4 class="text-base font-bold text-slate-800 mb-1" id="loading-title">AI Đang Quét Khuôn Mặt...</h4>
-        <p class="text-xs text-slate-500" id="loading-desc">Đang so khớp vector đặc trưng với kho ảnh sự kiện</p>
+        <p class="text-xs text-slate-500" id="loading-desc">Đang so khớp với toàn bộ kho 322 ảnh sự kiện</p>
       </div>
 
       <!-- Results Section -->
-      <div id="results-section" class="hidden space-y-4">
+      <div id="results-section" class="space-y-4 max-w-7xl mx-auto">
         <!-- Results Header Bar -->
         <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div class="flex items-center space-x-2">
             <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-            <h3 class="text-base font-bold text-slate-900" id="results-count">Tìm thấy 0 bức ảnh</h3>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900" id="results-count">Hiển thị 322 bức ảnh sự kiện</h3>
           </div>
           
           <div class="flex items-center space-x-2 w-full sm:w-auto">
             <button onclick="downloadAllZip()" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-all flex items-center justify-center space-x-1.5">
               <i data-lucide="download" class="w-4 h-4"></i>
-              <span>Tải Tất Cả Ảnh (.ZIP)</span>
+              <span>Tải Toàn Bộ Ảnh Này (.ZIP)</span>
             </button>
           </div>
         </div>
 
         <!-- Photos Grid -->
-        <div id="photos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div id="photos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
           <!-- Rendered dynamically by app.js -->
         </div>
       </div>
@@ -261,19 +286,19 @@
       <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 text-center max-w-3xl mx-auto">
         <h2 class="text-2xl font-bold text-slate-900 mb-2">Toàn Bộ Kho Ảnh Sự Kiện Trên Google Drive</h2>
         <p class="text-slate-600 text-sm">
-          Nếu bạn muốn tự mình duyệt qua từng thư mục ảnh gốc độ phân giải cao của ban tổ chức, bạn có thể truy cập trực tiếp các đường link chính thức dưới đây:
+          Bạn có thể truy cập trực tiếp các thư mục gốc trên Google Drive nếu muốn tải toàn bộ thư mục:
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         
-        <!-- Album 1: Ảnh Vinh Danh -->
+        <!-- Album: Ảnh Vinh Danh -->
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
               <i data-lucide="award" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-1">Ảnh Vinh Danh</h3>
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Ảnh Vinh Danh (49 Ảnh)</h3>
             <p class="text-xs text-slate-500 mb-4">Khoảnh khắc trao tặng kỷ niệm chương, khen thưởng các thầy cô tiêu biểu trên sân khấu.</p>
           </div>
           <a href="https://drive.google.com/drive/folders/1k561p2E4havGIaTQL-e66oFAeuEz4Ywy" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-800 font-semibold rounded-xl text-center text-sm transition-all flex items-center justify-center space-x-2">
@@ -282,14 +307,14 @@
           </a>
         </div>
 
-        <!-- Album 2: MÁY 1 -->
+        <!-- Album: MÁY 1 -->
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-4">
               <i data-lucide="camera" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-1">Góc Máy 1 (Sân Khấu)</h3>
-            <p class="text-xs text-slate-500 mb-4">Ảnh góc chính diện sân khấu hội trường, toàn cảnh lễ khai mạc và các tiết mục văn nghệ.</p>
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Góc Máy 1 (Check-in & MC)</h3>
+            <p class="text-xs text-slate-500 mb-4">Bao gồm 3 thư mục: Ảnh Check-in (50 ảnh), Ảnh MC (50 ảnh) và Ảnh Vinh Danh (49 ảnh).</p>
           </div>
           <a href="https://drive.google.com/drive/folders/1-oib_yYHmkONErL_HLcpd7Y8kgAAAFor" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-800 font-semibold rounded-xl text-center text-sm transition-all flex items-center justify-center space-x-2">
             <span>Mở Thư Mục Drive</span>
@@ -297,14 +322,14 @@
           </a>
         </div>
 
-        <!-- Album 3: MÁY 2 -->
+        <!-- Album: MÁY 2 -->
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
               <i data-lucide="users" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-1">Góc Máy 2 (Hậu Trường)</h3>
-            <p class="text-xs text-slate-500 mb-4">Ảnh chụp góc khán đài, khách mời, các khoảnh khắc cảm xúc và giao lưu bên lề.</p>
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Góc Máy 2 (124 Ảnh)</h3>
+            <p class="text-xs text-slate-500 mb-4">Bao gồm: Biểu Diễn Nghệ Thuật (48 ảnh), Thứ Trưởng Phát Biểu (30 ảnh), Đại Biểu & Khán Giả (46 ảnh).</p>
           </div>
           <a href="https://drive.google.com/drive/folders/1pGiZJk4jB5VRaYs66S3_OTU-_oHq2mFE" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-800 font-semibold rounded-xl text-center text-sm transition-all flex items-center justify-center space-x-2">
             <span>Mở Thư Mục Drive</span>
@@ -312,14 +337,14 @@
           </a>
         </div>
 
-        <!-- Album 4: Trường Kinh Tế -->
+        <!-- Album: Trường Kinh Tế -->
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
               <i data-lucide="image" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-1">Trường Kinh Tế (Tập Thể)</h3>
-            <p class="text-xs text-slate-500 mb-4">Ảnh chụp lưu niệm các đoàn khoa, cán bộ giảng viên và các nhóm check-in photobooth.</p>
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Trường Kinh Tế (49 Ảnh)</h3>
+            <p class="text-xs text-slate-500 mb-4">Ảnh kỷ niệm các khoa, phòng ban và các đoàn cán bộ giảng viên.</p>
           </div>
           <a href="https://drive.google.com/drive/folders/1UYMSRcwWGh2TEwItW0-idFTSGZvQ2vqx" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-800 font-semibold rounded-xl text-center text-sm transition-all flex items-center justify-center space-x-2">
             <span>Mở Thư Mục Drive</span>
@@ -327,14 +352,14 @@
           </a>
         </div>
 
-        <!-- Album 5: File nén Lễ 20/11 -->
+        <!-- Album: Lễ 2011.rar -->
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center mb-4">
               <i data-lucide="archive" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-1">Lễ 2011.rar (Bản Gốc)</h3>
-            <p class="text-xs text-slate-500 mb-4">File nén dung lượng cao chứa toàn bộ ảnh gốc không nén để phục vụ in ấn hoặc lưu trữ.</p>
+            <h3 class="text-lg font-bold text-slate-900 mb-1">File Nén Gốc Lễ 20/11</h3>
+            <p class="text-xs text-slate-500 mb-4">File nén dung lượng lớn chứa ảnh gốc chất lượng cao không nén.</p>
           </div>
           <a href="https://drive.google.com/file/d/11rymbDb2rXEvv8viFivthLW49Ct3ICwj/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-800 font-semibold rounded-xl text-center text-sm transition-all flex items-center justify-center space-x-2">
             <span>Tải File Nén (.RAR)</span>
@@ -345,40 +370,28 @@
       </div>
     </div>
 
-    <!-- ================= TAB 3: USER GUIDE ================= -->
+    <!-- ================= TAB 3: GUIDE ================= -->
     <div id="tab-guide" class="hidden max-w-3xl mx-auto space-y-6">
       <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
         <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center space-x-2">
           <i data-lucide="info" class="w-6 h-6 text-brand-700"></i>
-          <span>Hướng Dẫn Sử Dụng & Mẹo Tìm Ảnh Nhanh</span>
+          <span>Hướng Dẫn Tra Cứu Ảnh</span>
         </h2>
 
         <div class="space-y-4 text-sm text-slate-600 leading-relaxed">
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <h4 class="font-bold text-slate-900 mb-1 flex items-center space-x-2">
-              <span class="w-5 h-5 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs">1</span>
-              <span>Chọn ảnh mẫu chất lượng tốt</span>
-            </h4>
-            <p>Nên chọn ảnh selfie hoặc ảnh chân dung nhìn thẳng, đủ ánh sáng, không bị che khuất mắt/mũi/miệng hoặc đeo kính râm đen quá đậm.</p>
+            <h4 class="font-bold text-slate-900 mb-1">1. Tìm kiếm bằng gõ Tên hoặc Mã ảnh</h4>
+            <p>Bạn chỉ cần nhập tên giảng viên hoặc mã ảnh (ví dụ <code>PKN08625</code>, <code>HOA07716</code>) hoặc tên danh mục (như <code>Vinh danh</code>, <code>Checkin</code>, <code>MC</code>) vào ô tìm kiếm trên cùng. Danh sách ảnh sẽ lập tức lọc ra đúng ảnh đó.</p>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <h4 class="font-bold text-slate-900 mb-1 flex items-center space-x-2">
-              <span class="w-5 h-5 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs">2</span>
-              <span>Điều chỉnh thanh độ nhạy (Threshold)</span>
-            </h4>
-            <p>
-              • Nếu tìm thấy <strong>ít ảnh quá</strong>: Bạn kéo thanh trượt sang trái (về mức 50% - 55%) để AI nới lỏng tiêu chuẩn so khớp.<br>
-              • Nếu bị lẫn <strong>ảnh của người khác</strong>: Bạn kéo thanh trượt sang phải (lên 65% - 70%) để độ chính xác cao hơn.
-            </p>
+            <h4 class="font-bold text-slate-900 mb-1">2. Tìm kiếm bằng Khuôn mặt (AI)</h4>
+            <p>Chụp ảnh selfie hoặc tải 1 tấm ảnh rõ mặt nhìn thẳng. AI sẽ quét toàn bộ 322 bức ảnh sự kiện và lọc ra những bức ảnh có mặt bạn, kèm độ tương đồng %.</p>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <h4 class="font-bold text-slate-900 mb-1 flex items-center space-x-2">
-              <span class="w-5 h-5 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs">3</span>
-              <span>Bảo mật & Quyền riêng tư</span>
-            </h4>
-            <p>Khuôn mặt của bạn được phân tích trực tiếp ngay trong trình duyệt của bạn (Client-side AI), ảnh selfie của bạn không bao giờ bị lưu trữ lại trên bất kỳ máy chủ nào.</p>
+            <h4 class="font-bold text-slate-900 mb-1">3. Xem và tải ảnh gốc</h4>
+            <p>Mỗi bức ảnh tìm được đều có nút <strong>"Mở trên Drive"</strong> để bạn mở trực tiếp bức ảnh đó ở độ phân giải gốc cao nhất trên Google Drive.</p>
           </div>
         </div>
       </div>
@@ -392,10 +405,10 @@
       <button onclick="closeModal()" class="absolute -top-12 right-0 text-white hover:text-gold-400 p-2">
         <i data-lucide="x" class="w-8 h-8"></i>
       </button>
-      <img id="modal-img" src="" alt="Ảnh phóng to" class="max-w-full max-h-[80vh] rounded-lg object-contain shadow-2xl">
-      <div class="mt-4 flex items-center space-x-4">
-        <a id="modal-drive-link" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-brand-700 hover:bg-brand-800 text-white text-sm font-semibold rounded-xl flex items-center space-x-2">
-          <span>Xem File Gốc Trên Google Drive</span>
+      <img id="modal-img" src="" alt="Ảnh phóng to" class="max-w-full max-h-[78vh] rounded-lg object-contain shadow-2xl">
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+        <a id="modal-drive-link" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-brand-700 hover:bg-brand-800 text-white text-xs sm:text-sm font-semibold rounded-xl flex items-center space-x-2">
+          <span>Xem & Tải Ảnh Gốc Này Trên Google Drive</span>
           <i data-lucide="external-link" class="w-4 h-4"></i>
         </a>
       </div>
