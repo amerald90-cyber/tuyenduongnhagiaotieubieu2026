@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Batch Compute Face Descriptors</title>
+  <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/dist/face-api.min.js"></script>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+  <h2>Batch Compute Face Descriptors for 322 Event Photos</h2>
+  <div id="status" style="font-weight: bold; margin-bottom: 10px;">Starting...</div>
+  <progress id="progress" value="0" max="322" style="width: 100%; height: 25px;"></progress>
+  <div id="log" style="font-size: 12px; margin-top: 10px; max-height: 400px; overflow-y: auto; background: #eee; padding: 10px;"></div>
+
+  <script>
+    async function run() {
+      const statusEl = document.getElementById('status');
+      const progEl = document.getElementById('progress');
+      const logEl = document.getElementById('log');
+
+      function log(msg) {
+        logEl.innerHTML += `<div>${msg}</div>`;
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      statusEl.innerText = "Loading face-api models...";
+      const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model/';
+      await Promise.all([
+        faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
+        faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+        faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
+      ]);
+      log("✅ Models loaded!");
+
+      statusEl.innerText = "Fetching photos list...";
+      const res = await fetch('event_photos_database.json');
+      const photos = await res.json();
+      progEl.max = photos.length;
+      log(`Total photos to process: ${photos.length}`);
+
+      const results = [];
+      let totalFaces = 0;
+
+      for (let i = 0; i < photos.length; i++) {
+        const p = photos[i];
+        statusEl.innerText = `Processing photo ${i+1}/${photos.length}: ${p.filename}`;
+        progEl.value = i + 1;
+
+        try {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = () => resolve(); // continue on error
+            img.src = p.thumbnail;
+          });
+
+          if (img.width > 0) {
+            const detections = await faceapi.detectAllFaces(img, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.4 }))
+              .withFaceLandmarks()
+              .withFaceDescriptors();
+
+            const descriptors = detections.map(d => Array.from(d.descriptor));
+            totalFaces += descriptors.length;
+            p.descriptors = descriptors;
+            log(`[${i+1}/${photos.length}] ${p.filename}: ${descriptors.length} faces detected.`);
+          } else {
+            p.descriptors = [];
+            log(`[${i+1}/${photos.length}] ${p.filename}: Failed to load image.`);
+          }
+        } catch (err) {
+          p.descriptors = [];
+          log(`[${i+1}/${photos.length}] ${p.filename} Error: ${err.message}`);
+        }
+
+        results.push(p);
+
+        // Send progress or save every 50 photos
+        if ((i + 1) % 20 === 0 || i === photos.length - 1) {
+          await fetch('/save_progress', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(results)
+          });
+        }
+      }
+
+      statusEl.innerText = `🎉 DONE! Processed ${photos.length} photos, detected ${totalFaces} faces!`;
+      log(`🎉 ALL DONE! Check server output.`);
+    }
+
+    window.onload = run;
+  </script>
+</body>
+</html>
